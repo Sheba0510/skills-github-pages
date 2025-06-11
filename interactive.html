@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive Boxes</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .box {
+      width: 300px;
+      height: 50px;
+      background-color: #ccc;
+      margin: 20px 0;
+      padding: 10px;
+      cursor: pointer;
+      transition: height 0.3s ease;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+
+    .box.expanded {
+      height: 160px;
+    }
+
+    .options {
+      margin-top: 10px;
+      display: none;
+    }
+
+    .box.expanded .options {
+      display: block;
+    }
+
+    .option-title {
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+
+    .option-list button {
+      margin: 3px;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .color-red { background: red; color: white; }
+    .color-blue { background: blue; color: white; }
+    .color-green { background: green; color: white; }
+  </style>
+</head>
+<body>
+
+  <div class="box" onclick="toggleBox(this)">
+    <div>Top Box</div>
+    <div class="options">
+      <div class="option-title">Choose Color:</div>
+      <div class="option-list">
+        <button class="color-red" onclick="changeColor(event, this)">Red</button>
+        <button class="color-blue" onclick="changeColor(event, this)">Blue</button>
+        <button class="color-green" onclick="changeColor(event, this)">Green</button>
+      </div>
+      <div class="option-title">Choose Size:</div>
+      <div class="option-list">
+        <button onclick="changeSize(event, 'small')">Small</button>
+        <button onclick="changeSize(event, 'medium')">Medium</button>
+        <button onclick="changeSize(event, 'large')">Large</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" onclick="toggleBox(this)">
+    <div>Middle Box</div>
+    <div class="options">
+      <div class="option-title">Choose Color:</div>
+      <div class="option-list">
+        <button class="color-red" onclick="changeColor(event, this)">Red</button>
+        <button class="color-blue" onclick="changeColor(event, this)">Blue</button>
+        <button class="color-green" onclick="changeColor(event, this)">Green</button>
+      </div>
+      <div class="option-title">Choose Size:</div>
+      <div class="option-list">
+        <button onclick="changeSize(event, 'small')">Small</button>
+        <button onclick="changeSize(event, 'medium')">Medium</button>
+        <button onclick="changeSize(event, 'large')">Large</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" onclick="toggleBox(this)">
+    <div>Bottom Box</div>
+    <div class="options">
+      <div class="option-title">Choose Color:</div>
+      <div class="option-list">
+        <button class="color-red" onclick="changeColor(event, this)">Red</button>
+        <button class="color-blue" onclick="changeColor(event, this)">Blue</button>
+        <button class="color-green" onclick="changeColor(event, this)">Green</button>
+      </div>
+      <div class="option-title">Choose Size:</div>
+      <div class="option-list">
+        <button onclick="changeSize(event, 'small')">Small</button>
+        <button onclick="changeSize(event, 'medium')">Medium</button>
+        <button onclick="changeSize(event, 'large')">Large</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleBox(box) {
+      // Collapse others
+      document.querySelectorAll('.box').forEach(b => {
+        if (b !== box) b.classList.remove('expanded');
+      });
+      // Toggle clicked box
+      box.classList.toggle('expanded');
+    }
+
+    function changeColor(event, button) {
+      event.stopPropagation(); // prevent parent box toggle
+      const box = button.closest('.box');
+      box.style.backgroundColor = button.style.backgroundColor;
+    }
+
+    function changeSize(event, size) {
+      event.stopPropagation(); // prevent parent box toggle
+      const box = event.target.closest('.box');
+      if (size === 'small') box.style.width = '200px';
+      if (size === 'medium') box.style.width = '300px';
+      if (size === 'large') box.style.width = '400px';
+    }
+  </script>
+
+</body>
+</html>
